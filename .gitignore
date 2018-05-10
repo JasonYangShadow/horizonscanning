@@ -1,6 +1,6 @@
 bin/
 include/
 lib/
-pipselfcheck.json
+pip-selfcheck.json
 .git
 LICENSE
