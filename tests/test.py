@@ -1,9 +1,9 @@
 import unittest
 from newscrawl import NewsCrawl
 
-class TestNews(unittest.TestCase):
+class TestCrawl(unittest.TestCase):
 
-    def testSearch(self):
+    def testNewsorg(self):
         param = {}
         param['lang'] = 'en'
         param['sources'] = 'bbc-news, the-verge'
