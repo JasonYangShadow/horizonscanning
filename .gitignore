@@ -1,6 +1,2 @@
-bin/
-include/
-lib/
-pip-selfcheck.json
 .git
-LICENSE
+__pycache__
