@@ -7,7 +7,6 @@ from pprint import pprint
 from mongo import Mongo
 
 class NewsCrawl(BaseCrawl):
-    
     def __init__(self, config_path = 'config.ini'):
         super().__init__('newscrawl','crawling newsapi.org website',config_path)
         self.__key = self.config.getValue('newsorg','key')
@@ -22,7 +21,7 @@ class NewsCrawl(BaseCrawl):
         lang = None
         if 'lang' in params:
             lang = params['lang']
-        query = None
+        query = None 
         if 'q' in params:
             query = params['q']
         date_from = None
@@ -30,12 +29,12 @@ class NewsCrawl(BaseCrawl):
             date_from = params['from']
         else:
             yesterday = datetime.now() - timedelta(days = 1)
-            date_from = yesterday.strftime('%y-%m-%d')
+            date_from = yesterday.strftime('%Y-%m-%d')
         source = None
         if 'sources' in params:
             sources = params['sources']
 
-        articles = self.__api.get_everything(q = query, language = lang, sources = sources)
+        articles = self.__api.get_everything(q = query, language = lang, sources = sources, from_param = date_from)
         if articles['status'] == 'ok':
             return articles['articles']
         else:
@@ -50,3 +49,16 @@ class NewsCrawl(BaseCrawl):
             #mongo.saveUpdateOne({'url':d['url'],{'$set':{'source':d['source']['name'],
             #    'author': d['author'], 'title': d['title'], 'description':
             #    d['description'], 'time': d['publishedAt']}}, self.__db_file)
+    def getsource(self, lang = None):
+        sources = self.__api.get_sources()['sources']
+        source_results = []
+        for source in sources:
+            if lang is None or source['language'] != lang:
+                continue
+            source_dict = {}
+            source_dict['id'] = source['id']
+            source_dict['lang'] = source['language']
+            source_dict['country'] = source['country'] 
+            source_dict['category'] = source['category']
+            source_results.append(source_dict)
+        return source_results
