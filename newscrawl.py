@@ -9,11 +9,11 @@ from mongo import Mongo
 class NewsCrawl(BaseCrawl):
     def __init__(self, config_path = 'config.ini'):
         super().__init__('newscrawl','crawling newsapi.org website',config_path)
-        self.__key = self.config.getValue('newsorg','key')
+        self.__key = self.config.getValue('Newsorg','KEY')
         if self.__key is None:
             raise TeleException(Type.NoneException,'news api key not found')
         self.__api = NewsApiClient(api_key = self.__key)
-        self.__db_file = self.config.getValue('newsorg','db_file')
+        self.__db_file = self.config.getValue('Newsorg','db_file')
 
     def request(self, params = None):
         if not isinstance(params, dict):

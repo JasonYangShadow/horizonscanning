@@ -3,3 +3,4 @@ newsapi-python
 beautifulsoup4
 urllib3
 pycrypto
+twython

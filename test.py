@@ -1,9 +1,17 @@
 import unittest
 from pprint import pprint
 from newscrawl import NewsCrawl
+from twittercrawl import TwitterCrawl
 
-class TestCrawl(unittest.TestCase):
+class Test(unittest.TestCase):
 
+    def testTwitter(self):
+        param = {}
+        param['q'] = 'linux'
+        twittercrawl = TwitterCrawl('config.ini')
+        twittercrawl.run(param,False)
+
+    @unittest.skip('skip')
     def testNewsorg(self):
         param = {}
         param['lang'] = 'en'

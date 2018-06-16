@@ -28,7 +28,8 @@ class BaseCrawl:
             if data is not None:
                 self.resolve(data)
         else:
-            while true:
+            while True:
+                self.request(param)
                 if not self.queue.empty():
                     data = self.queue.get()
                     p = multiprocessing.Process(target = self.resolve, args = (data,))
