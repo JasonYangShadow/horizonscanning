@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from config import Config
 import multiprocessing
 import queue
+import _thread
 
 class BaseCrawl:
     def __init__(self, name, description, config_path = 'config.ini', queue_size = 10000):
@@ -28,8 +29,8 @@ class BaseCrawl:
             if data is not None:
                 self.resolve(data)
         else:
+            _thread.start_new_thread(self.request,(param,))
             while True:
-                self.request(param)
                 if not self.queue.empty():
                     data = self.queue.get()
                     p = multiprocessing.Process(target = self.resolve, args = (data,))

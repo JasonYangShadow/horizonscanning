@@ -7,7 +7,7 @@ class Test(unittest.TestCase):
 
     def testTwitter(self):
         param = {}
-        param['q'] = 'linux'
+        param['q'] = 'public policy'
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.run(param,False)
 

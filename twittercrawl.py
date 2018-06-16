@@ -9,11 +9,10 @@ class CustomStreamer(TwythonStreamer):
 
     def on_success(self,data):
         if 'text' in data:
-            #pprint(data['text'])
+            pprint(data)
             if self.__queue.full():
                 raise TeleException(Type.FullException,'queue is full')
             else:
-                pprint(data['text'])
                 self.__queue.put(data['text'])
 
     def on_error(self, status_code, data):
