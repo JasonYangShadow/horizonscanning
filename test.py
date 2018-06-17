@@ -5,6 +5,13 @@ from twittercrawl import TwitterCrawl
 
 class Test(unittest.TestCase):
 
+    def testTwitterSearch(self):
+        param = {}
+        param['q'] = 'linux'
+        twittercrawl = TwitterCrawl('config.ini')
+        twittercrawl.search(param)
+
+    @unittest.skip('skip')
     def testTwitter(self):
         param = {}
         param['q'] = 'public policy'

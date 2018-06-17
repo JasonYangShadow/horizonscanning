@@ -34,3 +34,17 @@ class TwitterCrawl(BaseCrawl):
 
     def resolve(self, data = None):
         pprint(data)
+
+    def search(self,param):
+        if param == None:
+            raise TeleException(Type.NoneException,'param should not be none')
+        self.__twitter = Twython(app_key = self.__api_key, app_secret = self.__api_secret, oauth_token = self.__access_key, oauth_token_secret = self.__access_secret)
+        if 'q' not in param:
+            raise TeleException(Type.NoneException,'for search function, q must be set')
+        count = 2000
+        if 'count' in param:
+            count = param['count']
+        search = self.__twitter.search(q=param['q'], count=count)
+        tweets = search['statuses']
+        for tweet in tweets:
+            print('lang is:{}, content is:{},location is:{}'.format(tweet['lang'],tweet['text'],tweet['user']['location']))
