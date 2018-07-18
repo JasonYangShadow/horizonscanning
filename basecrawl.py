@@ -4,6 +4,7 @@ from config import Config
 import multiprocessing
 import queue
 import _thread
+from mongo import Mongo
 
 class BaseCrawl:
     def __init__(self, name, description, config_path = 'config.ini', queue_size = 10000):
@@ -11,6 +12,7 @@ class BaseCrawl:
         self.desc = description
         self.config = Config(config_path)
         self.queue = queue.Queue(queue_size)
+        self.mongo = Mongo(config_path)
 
     @abstractmethod
     def request(self, param = None):

@@ -2,19 +2,21 @@ import unittest
 from pprint import pprint
 from newscrawl import NewsCrawl
 from twittercrawl import TwitterCrawl
+from crypto import Crypto
 
 class Test(unittest.TestCase):
 
+    @unittest.skip('skip')
     def testTwitterSearch(self):
         param = {}
         param['q'] = 'linux'
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.search(param)
 
-    @unittest.skip('skip')
+    unittest.skip('skip')
     def testTwitter(self):
         param = {}
-        param['q'] = 'public policy'
+        param['q'] = 'airport'
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.run(param,False)
 
@@ -29,6 +31,13 @@ class Test(unittest.TestCase):
             param['sources'] = source_str
         param['q'] = 'policy OR bitcoin OR health OR city'
         newcrawl.run(param)
+
+    @unittest.skip('skip')
+    def testencryption(self):
+        crypto = Crypto()
+        print(">>>")
+        print(crypto.encrypt('test'))
+        print("<<<")
 
 if __name__ == '__main__':
     unittest.main()
