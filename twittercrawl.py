@@ -16,6 +16,8 @@ class CustomStreamer(TwythonStreamer):
             return
         if data['lang'] != 'en':
             return
+        if data['place'] is None:
+            return
         do['hashtags'] = []
         if data['truncated'] == False:
             do['text'] = data['text']
@@ -53,7 +55,7 @@ class TwitterCrawl(BaseCrawl):
         stream = CustomStreamer(self.__api_key, self.__api_secret, self.__access_key, self.__access_secret, self.queue)
         if 'q' not in param:
             raise TeleException(Type.NoneException,'you should at least put q inside param')
-        stream.statuses.filter(track = param['q'])
+        stream.statuses.filter(track = param['q'], language='en')
 
     def resolve(self, data = None):
         mdata = []

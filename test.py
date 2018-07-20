@@ -13,10 +13,10 @@ class Test(unittest.TestCase):
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.search(param)
 
-    unittest.skip('skip')
+    #@unittest.skip('skip')
     def testTwitter(self):
         param = {}
-        param['q'] = 'airport'
+        param['q'] = 'tokyo'
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.run(param,False)
 
