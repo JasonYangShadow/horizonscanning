@@ -3,6 +3,7 @@ from pprint import pprint
 from newscrawl import NewsCrawl
 from twittercrawl import TwitterCrawl
 from crypto import Crypto
+from textprocess import CurlRequest
 
 class Test(unittest.TestCase):
 
@@ -13,12 +14,17 @@ class Test(unittest.TestCase):
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.search(param)
 
-    #@unittest.skip('skip')
+    @unittest.skip('skip')
     def testTwitter(self):
         param = {}
         param['q'] = 'tokyo'
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.run(param,False)
+
+    #@unittest.skip('skip')
+    def testCurl(self):
+        pprint(CurlRequest('i hate tokyo'))
+
 
     @unittest.skip('skip')
     def testNewsorg(self):
