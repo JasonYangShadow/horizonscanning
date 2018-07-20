@@ -1,6 +1,7 @@
 from twython import Twython, TwythonStreamer
 from basecrawl import BaseCrawl
 from pprint import pprint
+from mongo import Mongo
 
 class CustomStreamer(TwythonStreamer):
     def __init__(self, api_key, api_secret, access_key, access_secret, queue):
@@ -57,7 +58,8 @@ class TwitterCrawl(BaseCrawl):
     def resolve(self, data = None):
         mdata = []
         mdata.append(data)
-        self.mongo.insert(mdata,'stream_tweets')
+        mongo = Mongo('config.ini')
+        mongo.insert(mdata,'stream_tweets')
         pprint(data)
 
     def search(self,param):
