@@ -2,6 +2,8 @@ from twython import Twython, TwythonStreamer
 from basecrawl import BaseCrawl
 from pprint import pprint
 from mongo import Mongo
+from datetime import datetime
+from textprocess import CurlRequest
 
 class CustomStreamer(TwythonStreamer):
     def __init__(self, api_key, api_secret, access_key, access_secret, queue):
@@ -34,6 +36,10 @@ class CustomStreamer(TwythonStreamer):
         do['user']['location'] = data['user']['location']
 
         do['place'] = data['place']
+
+        do['timestamp'] = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+
+        do['sentiment'] = CurlRequest(do['text'])
 
         if self.__queue.full():
             raise TeleException(Type.FullException,'queue is full')

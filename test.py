@@ -14,16 +14,16 @@ class Test(unittest.TestCase):
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.search(param)
 
-    @unittest.skip('skip')
+    #@unittest.skip('skip')
     def testTwitter(self):
         param = {}
         param['q'] = 'tokyo'
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.run(param,False)
 
-    #@unittest.skip('skip')
+    @unittest.skip('skip')
     def testCurl(self):
-        pprint(CurlRequest('i hate tokyo'))
+        pprint(CurlRequest('though i think Tokyo is a good city to live, the expensive price of stuff turn me down'))
 
 
     @unittest.skip('skip')
