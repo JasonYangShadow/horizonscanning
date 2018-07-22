@@ -20,6 +20,8 @@ class CustomStreamer(TwythonStreamer):
             return
         if data['place'] is None:
             return
+        if data['place']['country_code'] != 'JP':
+            return
         do['hashtags'] = []
         if data['truncated'] == False:
             do['text'] = data['text']
