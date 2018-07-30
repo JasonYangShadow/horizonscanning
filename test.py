@@ -4,15 +4,22 @@ from newscrawl import NewsCrawl
 from twittercrawl import TwitterCrawl
 from crypto import Crypto
 from textprocess import CurlRequest
+from geo import *
 
 class Test(unittest.TestCase):
 
-    #@unittest.skip('skip')
+    @unittest.skip('skip')
     def testTwitterSearch(self):
         param = {}
         param['q'] = 'linux'
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.search(param)
+
+    #@unittest.skip('skip')
+    def testGeo(self):
+        pprint(GetLongLatFromName("Tokyo")) 
+        pprint(GetAddressFromLongLat(34.69,139.40))
+
 
     @unittest.skip('skip')
     def testTwitter(self):
