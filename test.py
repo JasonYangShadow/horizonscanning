@@ -3,7 +3,7 @@ from pprint import pprint
 from newscrawl import NewsCrawl
 from twittercrawl import TwitterCrawl
 from crypto import Crypto
-from textprocess import CurlRequest
+from textprocess import * 
 from geo import *
 
 class Test(unittest.TestCase):
@@ -15,7 +15,7 @@ class Test(unittest.TestCase):
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.search(param)
 
-    #@unittest.skip('skip')
+    @unittest.skip('skip')
     def testGeo(self):
         pprint(GetLongLatFromName("Tokyo")) 
         pprint(GetAddressFromLongLat(34.69,139.40))
@@ -51,6 +51,12 @@ class Test(unittest.TestCase):
         print(">>>")
         print(crypto.encrypt('test'))
         print("<<<")
+
+    #@unittest.skip('skip')
+    def testTopics(self):
+        t = TextProcess()
+        pprint(t.preprocess("Seems like the Department of Justice (and FBI) had a program to keep Donald Trump from becoming President. @DarrellIssa  @foxandfriends  If this had happened to the other side, everybody involved would be in jail. This is a Media coverup of the biggest story of our time."))
+        pprint(t.findTopics("Seems like the Department of Justice (and FBI) had a program to keep Donald Trump from becoming President. @DarrellIssa  @foxandfriends  If this had happened to the other side, everybody involved would be in jail. This is a Media coverup of the biggest story of our time."))
 
 if __name__ == '__main__':
     unittest.main()

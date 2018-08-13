@@ -4,10 +4,22 @@ try:
 except:
     from urllib import urlencode
 try:
-        from BytesIO import BytesIO 
+    from BytesIO import BytesIO
 except ImportError:
-        from io import BytesIO 
+    from io import BytesIO
 import json
+from gensim.utils import simple_preprocess
+from gensim.parsing.preprocessing import STOPWORDS
+from gensim import corpora, models
+from nltk.stem import WordNetLemmatizer, SnowballStemmer
+from nltk.stem.porter import *
+from exception import *
+
+import nltk
+nltk.download('wordnet')
+
+TOPICS = 2
+NUM_WORDS = 2
 
 def CurlRequest(data, url = 'http://text-processing.com/api/sentiment/'):
     c = pycurl.Curl()
@@ -30,3 +42,26 @@ def CurlRequest(data, url = 'http://text-processing.com/api/sentiment/'):
     else:
         return None
 
+class TextProcess:
+    def __init__(self):
+        self.__stemmer = SnowballStemmer(language = 'english')
+
+    def lemmatizeText(self,text):
+        return self.__stemmer.stem(WordNetLemmatizer().lemmatize(text))
+
+    def preprocess(self,text):
+        result = []
+        #prreprocess the tweets, i.e, removing links, rt, username
+        for token in simple_preprocess(text):
+            if token not in STOPWORDS and len(token)>3:
+                result.append(self.lemmatizeText(token))
+        return result
+
+    def findTopics(self,text):
+        tokens = self.preprocess(text)
+        if not isinstance(tokens, list):
+            raise TeleException(Type.WrongTypeException,'tokens should be list')
+        dictionary = corpora.Dictionary([tokens])
+        corpus = [dictionary.doc2bow(tokens)]
+        lda_model = models.ldamodel.LdaModel(corpus, num_topics = TOPICS, id2word = dictionary, passes = 20)
+        return lda_model.print_topics(num_topics = TOPICS, num_words = NUM_WORDS)

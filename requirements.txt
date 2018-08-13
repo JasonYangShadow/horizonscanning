@@ -6,3 +6,5 @@ pycrypto
 twython
 pycurl
 geopy
+gensim
+nltk
