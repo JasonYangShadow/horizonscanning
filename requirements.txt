@@ -8,3 +8,5 @@ pycurl
 geopy
 gensim
 nltk
+flask
+jinja2
