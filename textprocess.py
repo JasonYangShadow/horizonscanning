@@ -52,6 +52,9 @@ class TextProcess:
     def preprocess(self,text):
         result = []
         #prreprocess the tweets, i.e, removing links, rt, username
+        text = re.sub(r'@\w+','',text)
+        text = re.sub(r'http:\/\/\w+(\.\w+)*','',text)
+        print(text)
         for token in simple_preprocess(text):
             if token not in STOPWORDS and len(token)>3:
                 result.append(self.lemmatizeText(token))

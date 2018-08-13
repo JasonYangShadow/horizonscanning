@@ -55,7 +55,6 @@ class Test(unittest.TestCase):
     #@unittest.skip('skip')
     def testTopics(self):
         t = TextProcess()
-        pprint(t.preprocess("Seems like the Department of Justice (and FBI) had a program to keep Donald Trump from becoming President. @DarrellIssa  @foxandfriends  If this had happened to the other side, everybody involved would be in jail. This is a Media coverup of the biggest story of our time."))
         pprint(t.findTopics("Seems like the Department of Justice (and FBI) had a program to keep Donald Trump from becoming President. @DarrellIssa  @foxandfriends  If this had happened to the other side, everybody involved would be in jail. This is a Media coverup of the biggest story of our time."))
 
 if __name__ == '__main__':
