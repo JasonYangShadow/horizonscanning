@@ -4,6 +4,7 @@ from pprint import pprint
 from mongo import Mongo
 from datetime import datetime
 from textprocess import CurlRequest
+import re
 
 class CustomStreamer(TwythonStreamer):
     def __init__(self, api_key, api_secret, access_key, access_secret, queue):
@@ -81,7 +82,32 @@ class TwitterCrawl(BaseCrawl):
         count = 2000
         if 'count' in param:
             count = param['count']
-        search = self.__twitter.search(q=param['q'], count=count)
+        geocode = None
+        if 'geocode' in param:
+            geocode = param['geocode']
+        do = {}
+        search = self.__twitter.search(q=param['q'], count=count, geocode=geocode, lang='en', tweet_mode='extended')
         tweets = search['statuses']
-        for tweet in tweets:
-            print('lang is:{}, content is:{},location is:{}'.format(tweet['lang'],tweet['text'],tweet['user']['location']))
+        pattern = re.compile(r'RT\s@\w+')
+        for data in tweets:
+            do['hashtags'] = []
+            if data['truncated'] == False:
+                do['text'] = data['full_text']
+                if pattern.match(do['text']):
+                    continue
+                for d in data['entities']['hashtags']:
+                    do['hashtags'].append(d['text'])
+            else:
+                do['text'] = data['extended_tweet']['full_text']
+                if pattern.match(do['text']):
+                    continue
+                for d in data['extended_tweet']['entities']['hashtags']:
+                    do['hashtags'].append(d['text'])
+            do['user'] = {}
+            do['user']['id'] = data['user']['id']
+            do['user']['id_str'] = data['user']['id_str']
+            do['user']['name'] = data['user']['screen_name']
+            do['user']['location'] = data['user']['location']
+            do['place'] = data['place']
+            do['sentiment'] = CurlRequest(do['text'])
+            pprint(do)
