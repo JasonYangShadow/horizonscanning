@@ -8,7 +8,7 @@ from geo import *
 
 class Test(unittest.TestCase):
 
-    #@unittest.skip('skip')
+    @unittest.skip('skip')
     def testTwitterSearch(self):
         param = {}
         param['q'] = 'linux'
@@ -21,7 +21,7 @@ class Test(unittest.TestCase):
         pprint(GetAddressFromLongLat(34.69,139.40))
 
 
-    @unittest.skip('skip')
+    #@unittest.skip('skip')
     def testTwitter(self):
         param = {}
         param['q'] = 'travel'

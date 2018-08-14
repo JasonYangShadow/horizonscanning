@@ -42,7 +42,7 @@ class CustomStreamer(TwythonStreamer):
 
         do['timestamp'] = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
 
-        do['sentiment'] = CurlRequest(do['text'])
+        #do['sentiment'] = CurlRequest(do['text'])
 
         if self.__queue.full():
             raise TeleException(Type.FullException,'queue is full')
@@ -68,10 +68,12 @@ class TwitterCrawl(BaseCrawl):
 
     def resolve(self, data = None):
         mdata = []
-        mdata.append(data)
-        mongo = Mongo('config.ini')
-        mongo.insert(mdata,'stream_tweets')
-        pprint(data)
+        if CurlRequest(data['text']) == "neg":
+            data['sentiment'] = 'neg'
+            mdata.append(data)
+            mongo = Mongo('config.ini')
+            mongo.insert(mdata,'stream_tweets')
+            pprint(data)
 
     def search(self,param):
         if param == None:

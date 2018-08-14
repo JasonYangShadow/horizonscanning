@@ -36,8 +36,8 @@ def update():
             else:
                 session[id] = curr
                 data = {}
-                data['poix0'] = '41.8625,-87.6166;blue;red;20;C'
-                data['poix1'] = '41.94833,-87.6555;ffffff;ffa500;20;C'
+                data['poix0'] = '41.8625,-87.6166;ffffff;000000;20;topic is very good'
+                data['poix1'] = '41.94833,-87.6555;ffffff;000000;20;C'
                 data['app_id'] = 'F5lomBuB7fkRhnxcAnp0'
                 data['app_code'] = 'lMT_3-fgAqE_JEb9LejqwQ'
                 return "https://image.maps.api.here.com/mia/1.6/mapview?"+urllib.parse.urlencode(data)
