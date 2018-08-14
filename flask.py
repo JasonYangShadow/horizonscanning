@@ -1,7 +1,0 @@
-from flask import Flask, render_template
-app = Flask(__name__)
-
-@app.route("/")
-def root():
-    param = {}
-    return render_template("index.html", data = param)
