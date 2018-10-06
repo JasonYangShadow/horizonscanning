@@ -5,6 +5,7 @@ from twittercrawl import TwitterCrawl
 from crypto import Crypto
 from textprocess import * 
 from geo import *
+from redditcrawl import RedditCrawl
 
 class Test(unittest.TestCase):
 
@@ -21,12 +22,18 @@ class Test(unittest.TestCase):
         pprint(GetAddressFromLongLat(34.69,139.40))
 
 
-    #@unittest.skip('skip')
+    @unittest.skip('skip')
     def testTwitter(self):
         param = {}
         param['q'] = 'travel'
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.run(param,False)
+
+    #@unittest.skip('skip')
+    def testReddit(self):
+        reddit = RedditCrawl('config.ini')
+        reddit.getAllSubmissions('JapanTravel')
+
 
     @unittest.skip('skip')
     def testCurl(self):

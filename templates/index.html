@@ -1,33 +1,180 @@
-<!doctype html>
-<html>
-    <script charset="utf-8">
-        var auto_refresh = setInterval(
-            function(){
-                $.ajax({
-                type: "POST",
-                url: "/update",
-                data: $.cookie("id"),
-                success: function(data){
-                    if(data != ""){
-                        $('#image_wrapper').html('<center><img src="' + data + '"/></center>')
-                    }
-                }
-                });
-            }
-        ,10000);
-    </script>
-    <body>
-        <article>
-            <header>
-                <center><h3>SIP: Horizen scanning for future cities</h3></center>
-            </header>
-        </article>
-        <div id="image_wrapper">
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Future Cities: Horizon scanning in urban planning</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom fonts for this template -->
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+        <!-- Custom styles for this template -->
+        <link href="css/grayscale.min.css" rel="stylesheet">
+
+    </head>
+
+    <body id="page-top">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top">Home</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="#projects">Members</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="#signup">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <header class="masthead">
+            <div class="container d-flex h-100 align-items-center">
+                <div class="mx-auto text-center">
+                    <h1 class="mx-auto my-0 text-uppercase">Future Cities</h1>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">A horizon scanning tool to make better policy</h2>
+                    <a href="#about" class="btn btn-primary js-scroll-trigger">Demo</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- About Section -->
+        <section id="about" class="about-section text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <h2 class="text-white mb-4">A policy tool for horizon scanning to improve strategic planning in urban areas</h2>
+                        <p class="text-white-50">This tool will systematically collect a broad range of data to identify, assess, and cluster emerging urban issues. With the data collected we plan to structure emerging trends in different STEEP categories(social, technological, economic,ecological, and political) and index them based on their uncertainty and potential impact on urban metabolism</p>
+                    </div>
+                </div>
+                <img src="img/data_analysis.png" class="img-fluid" alt="">
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section bg-light">
+            <div class="container">
+
+                <div class="card-columns">
+                    <div class="card text-center" style="width:400px">
+                        <img class="card-img-top" src="img/img_yang.jpg" alt="Card image" style="width:73%">
+                        <div class="card-body">
+                            <h4 class="card-title">Xu Yang</h4>
+                            <p class="card-text">D2 student in Graduate School of Frontier Sciences, University of Tokyo</p>
+                            <!-- <a href="#" class="btn btn-primary">See Profile</a> -->
+                        </div>
+                    </div>
+
+                    <div class="card" style="width:400px">
+                        <img class="card-img-top" src="img/img_avatar.png" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <h4 class="card-title">John Doe</h4>
+                            <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
+                            <!-- <a href="#" class="btn btn-primary">See Profile</a> -->
+                        </div>
+                    </div>
+
+
+                    <div class="card" style="width:400px">
+                        <img class="card-img-top" src="img/img_avatar.png" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <h4 class="card-title">John Doe</h4>
+                            <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
+                            <!-- <a href="#" class="btn btn-primary">See Profile</a> -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Signup Section -->
+        <section id="signup" class="signup-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 col-lg-8 mx-auto text-center">
+
+                        <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
+                        <h2 class="text-white mb-5">Subscribe to receive updates!</h2>
+
+                        <form class="form-inline d-flex">
+                            <input type="email" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail" placeholder="Enter email address...">
+                            <button type="submit" class="btn btn-primary mx-auto">Subscribe</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section bg-black">
+            <div class="container">
+
+                <div class="row justify-content-center">
+
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-envelope text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">Email</h4>
+                                <hr class="my-4">
+                                <div class="small text-black-50">
+                                    <a href="mailto:jasonyangshadow@yahoo.com">jasonyangshadow@yahoo.com</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="social d-flex justify-content-center">
+                    <a href="https://github.com/jasonyangshadow/horizonscanning" class="mx-2">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-black small text-center text-white-50">
+            <div class="container">
+                Copyright &copy; Xu Yang @2018
+            </div>
+        </footer>
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Plugin JavaScript -->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- Custom scripts for this template -->
+        <script src="js/grayscale.min.js"></script>
+
     </body>
-    <script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" charset="utf-8"></script>
+
 </html>

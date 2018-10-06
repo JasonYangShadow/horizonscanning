@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+    <head>
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" charset="utf-8" type="text/javascript"></script>
+        <script charset="utf-8">
+            $(document).ready(function(){
+            var auto_refresh = setInterval(
+            function(){
+                $.ajax({
+                type: "POST",
+                url: "/update",
+                data: $.cookie("id"),
+                success: function(data){
+                    if(data != ""){
+                        $('#image_wrapper').html('<center><img src="' + data + '"/></center>')
+                    }
+                }
+                });
+            }
+        ,10000);
+        });
+        </script>
+        <style>
+            .introduction{
+                max-width: 70%; 
+                position:absolute;
+                left: 15%;
+            }
+        </style>
+    </head>
+    <body>
+        <article>
+            <header>
+                <center><h3>SIP: Horizen scanning for future cities</h3></center>
+            </header>
+        </article>
+        <article class="introduction">
+            <center>
+            Our SIP is aimed at establishing a policy tool for horizon scanning to improve strategic planning in urban areas. We plan to create an application that systematically collects a broad range of data to identify, assess, and cluster emerging urban issues. With the data collected we also plan to structure emerging trends in different STEEP categories (societal, technological, economic, ecological, and political) and index them based on their uncertainty and potential impact on urban metabolism. 
+
+            Our ultimate goal with this SPI project is to enable ‘collective sense-making processes’ to help policymakers recognize emerging signals and policy issues in urban areas. We want to automatize a horizon scanning process and provide an alternative solution to current methodologies used to inform policy (e.g. experts panels, scenario planning, surveys). We believe that our SIP could potentially improve strategic forecasting and the granularity of information on urban planning. 
+            </center>
+        </article>
+        <div id="image_wrapper">
+        </div>
+    </body>
+</html>

@@ -3,7 +3,7 @@ import random
 import datetime
 import urllib
 from flask import Flask, render_template, redirect, url_for, request, session, make_response
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='',static_folder='templates',template_folder='templates')
 app.secret_key = 'qawsedrftgyh1234567'
 
 def GenerateRadom(size = 24):
@@ -43,4 +43,4 @@ def update():
                 return "https://image.maps.api.here.com/mia/1.6/mapview?"+urllib.parse.urlencode(data)
 
 if __name__ == "__main__":
-    app.run(host = '0.0.0.0',debug = True)
+    app.run(host = '0.0.0.0',port = 8080,debug = False)

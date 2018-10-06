@@ -10,3 +10,4 @@ gensim
 nltk
 flask
 jinja2
+praw
