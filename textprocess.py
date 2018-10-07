@@ -18,8 +18,8 @@ from exception import *
 import nltk
 nltk.download('wordnet')
 
-TOPICS = 2
-NUM_WORDS = 2
+TOPICS = 5 
+NUM_WORDS = 10 
 
 def CurlRequest(data, url = 'http://text-processing.com/api/sentiment/'):
     c = pycurl.Curl()
@@ -54,7 +54,7 @@ class TextProcess:
         #prreprocess the tweets, i.e, removing links, rt, username
         text = re.sub(r'@\w+','',text)
         text = re.sub(r'http:\/\/\w+(\.\w+)*','',text)
-        print(text)
+        #print(text)
         for token in simple_preprocess(text):
             if token not in STOPWORDS and len(token)>3:
                 result.append(self.lemmatizeText(token))

@@ -1,5 +1,10 @@
 from basecrawl import BaseCrawl
 import praw
+import string
+import time
+from datetime import date
+from praw.models import MoreComments
+from textprocess import *
 
 class RedditCrawl(BaseCrawl):
 
@@ -11,11 +16,29 @@ class RedditCrawl(BaseCrawl):
         self.__user_agent = 'web:sip_gsdm:1 (by /u/jasonyangshadow)'
         self.__reddit = praw.Reddit(client_id = self.__client_id, client_secret = self.__client_secret, redirect_url = self.__redirect_url, user_agent = self.__user_agent)
 
-    def getAllSubmissions(self,name):
-        subreddit = self.__reddit.subreddit(name)
-        for sub in subreddit.hot(limit = 1):
-            print(sub.title)
-            print(sub.selftext)
-            print(sub.permalink)
-            print(sub.comments[0].body)
-            print(sub.comments[0].list())
+    def request(self, params = None):
+        subreddit = self.__reddit.subreddit(params['name'])
+        ret = {}
+        lim = 50
+        if 'limit' in params:
+            lim = params['limit']
+        for sub in subreddit.hot(limit = lim):
+            key = sub.permalink
+            ret[key] = {}
+            ret[key]['url'] = sub.url 
+            ret[key]['title'] = sub.title
+            ret[key]['text'] = sub.selftext.strip( '\n').replace("\n","")
+            ret[key]['time'] = date.fromtimestamp(sub.created).strftime("%Y-%m-%d")
+            sub.comments.replace_more(limit = None)
+            ret[key]['comment'] = []
+            for comment in sub.comments.list():
+                ret[key]['comment'].append(comment.body.replace('\n','').replace('\t',''))
+        return ret
+
+    def resolve(self, data = None):
+        for k,v in data.items():
+            if CurlRequest(v['text']) == 'neg':
+                print(v['text'])
+                t = TextProcess()
+                print(t.findTopics(v['text'] +''.join(v['comment'])))
+

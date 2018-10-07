@@ -32,8 +32,9 @@ class Test(unittest.TestCase):
     #@unittest.skip('skip')
     def testReddit(self):
         reddit = RedditCrawl('config.ini')
-        reddit.getAllSubmissions('JapanTravel')
-
+        param = {}
+        param['name'] = 'JapanTravel'
+        reddit.run(param)
 
     @unittest.skip('skip')
     def testCurl(self):
