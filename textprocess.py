@@ -42,6 +42,29 @@ def CurlRequest(data, url = 'http://text-processing.com/api/sentiment/'):
     else:
         return None
 
+def SentimentAnalysis(data, url = 'http://text-processing.com/api/sentiment/'):
+    c = pycurl.Curl()
+    buf = BytesIO()
+    c.setopt(pycurl.URL, url)
+    c.setopt(pycurl.WRITEFUNCTION,buf.write)
+    post_data = {'text':data}
+    post_field = urlencode(post_data)
+    c.setopt(c.POSTFIELDS,post_field)
+    c.perform()
+    c.close()
+
+    res = buf.getvalue().decode('UTF-8')
+    if res != None and res != "":
+        print(res)
+        d = json.loads(res)
+        if 'label' in d:
+            return [d['label'], d['probability'][d['label']]]
+        else:
+            return None
+    else:
+        return None
+
+
 class TextProcess:
     def __init__(self):
         self.__stemmer = SnowballStemmer(language = 'english')

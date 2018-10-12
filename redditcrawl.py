@@ -22,7 +22,7 @@ class RedditCrawl(BaseCrawl):
         lim = 50
         if 'limit' in params:
             lim = params['limit']
-        for sub in subreddit.hot(limit = lim):
+        for sub in subreddit.new(limit = lim):
             key = sub.permalink
             ret[key] = {}
             ret[key]['url'] = sub.url 
@@ -30,15 +30,24 @@ class RedditCrawl(BaseCrawl):
             ret[key]['text'] = sub.selftext.strip( '\n').replace("\n","")
             ret[key]['time'] = date.fromtimestamp(sub.created).strftime("%Y-%m-%d")
             sub.comments.replace_more(limit = None)
-            ret[key]['comment'] = []
-            for comment in sub.comments.list():
-                ret[key]['comment'].append(comment.body.replace('\n','').replace('\t',''))
+            ret[key]['comment_num'] = len(sub.comments.list())
+            #ret[key]['comment'] = []
+            #for comment in sub.comments.list():
+            #    ret[key]['comment'].append(comment.body.replace('\n','').replace('\t',''))
+            ret[key]['sentences'] = ret[key]['text'].split('.')
         return ret
 
     def resolve(self, data = None):
         for k,v in data.items():
-            if CurlRequest(v['text']) == 'neg':
+            sentiment = SentimentAnalysis(v['text'])
+            if (len(sentiment) > 0) and (sentiment[0] == 'neg') and (sentiment[1] > 0.7):
                 print(v['text'])
                 t = TextProcess()
-                print(t.findTopics(v['text'] +''.join(v['comment'])))
-
+                print(t.findTopics(v['text']))
+                sentences_sentiment = {} 
+                for sen in v['sentences']:
+                    s_tmp = SentimentAnalysis(sen)
+                    if s_tmp[0] == 'neg':
+                        sentences_sentiment[sen] = SentimentAnalysis(sen)
+                print(sentences_sentiment)
+                print(v['comment_num'])

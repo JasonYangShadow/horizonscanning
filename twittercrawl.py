@@ -3,7 +3,7 @@ from basecrawl import BaseCrawl
 from pprint import pprint
 from mongo import Mongo
 from datetime import datetime
-from textprocess import CurlRequest
+from textprocess import *
 import re
 
 class CustomStreamer(TwythonStreamer):
@@ -19,10 +19,10 @@ class CustomStreamer(TwythonStreamer):
             return
         if data['lang'] != 'en':
             return
-        if data['place'] is None:
-            return
-        if data['place']['country_code'] != 'JP':
-            return
+        #if data['place'] is None:
+        #    return
+        #if data['place']['country_code'] != 'JP':
+        #    return
         do['hashtags'] = []
         if data['truncated'] == False:
             do['text'] = data['text']
@@ -69,11 +69,12 @@ class TwitterCrawl(BaseCrawl):
     def resolve(self, data = None):
         mdata = []
         if CurlRequest(data['text']) == "neg":
-            data['sentiment'] = 'neg'
-            mdata.append(data)
-            mongo = Mongo('config.ini')
-            mongo.insert(mdata,'stream_tweets')
-            pprint(data)
+            #data['sentiment'] = 'neg'
+            #mdata.append(data)
+            #mongo = Mongo('config.ini')
+            #mongo.insert(mdata,'stream_tweets')
+            print(data['text'])
+
 
     def search(self,param):
         if param == None:
