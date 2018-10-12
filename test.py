@@ -33,6 +33,7 @@ class Test(unittest.TestCase):
     def testReddit(self):
         reddit = RedditCrawl('config.ini')
         param = {}
+        param['limit'] = 500
         param['name'] = 'JapanTravel'
         reddit.run(param)
 
