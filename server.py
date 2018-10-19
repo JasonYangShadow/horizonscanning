@@ -7,7 +7,8 @@ from mongo import mongo
 app = Flask(__name__, static_url_path='',static_folder='templates',template_folder='templates')
 app.secret_key = 'qawsedrftgyh1234567'
 
-inteval = 20
+update_inteval = 20
+data_inteval = 5
 
 def GenerateRadom(size = 24):
     return ''.join(random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*') for _ in range(size))
@@ -34,7 +35,7 @@ def data():
                 last = datetime.datetime.strptime(last,'%Y/%m/%d %H:%M:%S')
             curr = datetime.datetime.now()
             td = curr - last
-            if td.total_seconds() < inteval:
+            if td.total_seconds() < data_inteval:
                 return '' 
 
 @app.route("/update",methods = ['POST'])
@@ -51,7 +52,7 @@ def update():
                 last = datetime.datetime.strptime(last,'%Y/%m/%d %H:%M:%S')
             curr = datetime.datetime.now()
             td = curr - last
-            if td.total_seconds() < inteval:
+            if td.total_seconds() < update_inteval:
                 return '' 
             else:
                 session[id] = curr
