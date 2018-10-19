@@ -3,8 +3,11 @@ import random
 import datetime
 import urllib
 from flask import Flask, render_template, redirect, url_for, request, session, make_response
+from mongo import mongo
 app = Flask(__name__, static_url_path='',static_folder='templates',template_folder='templates')
 app.secret_key = 'qawsedrftgyh1234567'
+
+inteval = 20
 
 def GenerateRadom(size = 24):
     return ''.join(random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*') for _ in range(size))
@@ -16,6 +19,23 @@ def index():
     resp.set_cookie('id',id)
     session[id] = datetime.datetime.now()
     return resp
+
+@app.route("/data")
+def data():
+    id = request.cookies.get('id')
+    if id is None:
+        return redirect(url_for('index'))
+    else:
+        last = session[id]
+        if last is None:
+            return redirect(url_for('index'))
+        else:
+            if isinstance(last, str):
+                last = datetime.datetime.strptime(last,'%Y/%m/%d %H:%M:%S')
+            curr = datetime.datetime.now()
+            td = curr - last
+            if td.total_seconds() < inteval:
+                return '' 
 
 @app.route("/update",methods = ['POST'])
 def update():
@@ -31,7 +51,7 @@ def update():
                 last = datetime.datetime.strptime(last,'%Y/%m/%d %H:%M:%S')
             curr = datetime.datetime.now()
             td = curr - last
-            if td.total_seconds() < 20:
+            if td.total_seconds() < inteval:
                 return '' 
             else:
                 session[id] = curr
