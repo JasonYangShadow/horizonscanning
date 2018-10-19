@@ -18,7 +18,7 @@ from exception import *
 import nltk
 nltk.download('wordnet')
 
-TOPICS = 5 
+TOPICS = 2 
 NUM_WORDS = 10 
 
 def CurlRequest(data, url = 'http://text-processing.com/api/sentiment/'):
@@ -55,15 +55,14 @@ def SentimentAnalysis(data, url = 'http://text-processing.com/api/sentiment/'):
 
     res = buf.getvalue().decode('UTF-8')
     if res != None and res != "":
-        print(res)
-        d = json.loads(res)
-        if 'label' in d:
-            return [d['label'], d['probability'][d['label']]]
-        else:
-            return None
+        try:
+            d = json.loads(res)
+            if 'label' in d:
+                return [d['label'], d['probability'][d['label']]]
+        except Exception as e:
+            pass
     else:
         return None
-
 
 class TextProcess:
     def __init__(self):
