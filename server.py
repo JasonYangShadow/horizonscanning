@@ -3,7 +3,7 @@ import random
 import datetime
 import urllib
 from flask import Flask, render_template, redirect, url_for, request, session, make_response
-from mongo import mongo
+from mongo import Mongo
 app = Flask(__name__, static_url_path='',static_folder='templates',template_folder='templates')
 app.secret_key = 'qawsedrftgyh1234567'
 

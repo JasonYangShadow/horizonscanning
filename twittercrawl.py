@@ -37,9 +37,7 @@ class CustomStreamer(TwythonStreamer):
         do['user']['id_str'] = data['user']['id_str']
         do['user']['name'] = data['user']['screen_name']
         do['user']['location'] = data['user']['location']
-
         do['place'] = data['place']
-
         do['timestamp'] = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
 
         #do['sentiment'] = CurlRequest(do['text'])
@@ -51,6 +49,7 @@ class CustomStreamer(TwythonStreamer):
 
     def on_error(self, status_code, data):
         print(status_code)
+        print(data)
 
 class TwitterCrawl(BaseCrawl):
     def __init__(self, config_path = 'config.ini'):
@@ -59,6 +58,7 @@ class TwitterCrawl(BaseCrawl):
         self.__api_secret = self.config.getValue('Twitter','API_SECRET')
         self.__access_key = self.config.getValue('Twitter','ACCESS_KEY')
         self.__access_secret = self.config.getValue('Twitter','ACCESS_SECRET')
+        self.__db_twitter = self.config.getValue('Mongo','DB_TWITTER')
 
     def request(self, param = None):
         stream = CustomStreamer(self.__api_key, self.__api_secret, self.__access_key, self.__access_secret, self.queue)
@@ -69,12 +69,11 @@ class TwitterCrawl(BaseCrawl):
     def resolve(self, data = None):
         mdata = []
         if CurlRequest(data['text']) == "neg":
-            #data['sentiment'] = 'neg'
-            #mdata.append(data)
-            #mongo = Mongo('config.ini')
-            #mongo.insert(mdata,'stream_tweets')
-            print(data['text'])
-
+            data['sentiment'] = 'neg'
+            mdata.append(data)
+            mongo = Mongo('config.ini')
+            mongo.insert(mdata,self.__db_twitter)
+            #print(data['text'])
 
     def search(self,param):
         if param == None:
@@ -114,3 +113,9 @@ class TwitterCrawl(BaseCrawl):
             do['place'] = data['place']
             do['sentiment'] = CurlRequest(do['text'])
             pprint(do)
+
+if __name__ == '__main__':
+    param = {}
+    param['q'] = "Japan Travel OR Japan Tourism -filter:retweets :("
+    twittercrawl = TwitterCrawl('config.ini')
+    twittercrawl.run(param, False)
