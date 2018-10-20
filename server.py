@@ -9,6 +9,7 @@ app.secret_key = 'qawsedrftgyh1234567'
 
 update_inteval = 20
 data_inteval = 5
+mongo = Mongo('config.ini')
 
 def GenerateRadom(size = 24):
     return ''.join(random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*') for _ in range(size))
