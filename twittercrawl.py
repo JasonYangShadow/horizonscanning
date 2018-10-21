@@ -113,3 +113,4 @@ class TwitterCrawl(BaseCrawl):
             do['time'] = data['created_at']
             if do['sentiment'] == "neg":
                 mongo.saveUpdateOne({'content':do['text']},{'$set':{'hashtags':do['hashtags'],'time':do['time']}}, self.__db_twitter)
+            print('done '+ datetime.now().strftime('%Y/%m/%d %H:%M:%S'))
