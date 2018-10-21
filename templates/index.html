@@ -20,7 +20,7 @@
 
         <!-- Custom styles for this template -->
         <link href="css/grayscale.min.css" rel="stylesheet">
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
     </head>
 
     <body id="page-top" style="background: #161616 !important;">
@@ -59,7 +59,7 @@
                     <h1 class="mx-auto my-0 text-uppercase">Future Cities</h1>
                     <h2 class="text-white mx-auto mt-2 mb-5">A horizon scanning tool to make decisions</h2>
                     <button type="button" class="btn btn-dark" disabled data-toggle="modal" data-target="#demo">Demo</button>
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#data">Data</button>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#reddit">Data</button>
                 </div>
             </div>
         </header>
@@ -72,58 +72,24 @@
             </div>
         </div>
 
-        <div class="modal fade bd-example-modal-lg" id="data" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal fade bd-example-modal-lg" id="reddit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="table-responsive">
-                        <table class="table" id="data_table">
+                        <table class="table" id="reddit_data_table" data-show-header="true" data-pagination="true" data-id-field="id", data-page-size="10" data-search="true" data-toggle="table" data-striped="true" data-url="/data" data-data-type="json">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Source</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Content</th>
-                                    <th scope="col">URL</th>
+                                    <th data-field="source" scope="col">Source</th>
+                                    <th data-field="title" scope="col">Title</th>
+                                    <th data-field="content" data-formatter="contentFormatter" scope="col">Content</th>
+                                    <th data-field="url" data-formatter="urlFormatter" scope="col">URL</th>
+                                    <th data-field="time" scope="col">Published Time</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                    <td>@twitter</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
-                    <nav aria-label="...">
-                        <ul class="pagination">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
         </div>
@@ -293,21 +259,15 @@
         <script src="js/grayscale.min.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" charset="utf-8" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
         <script charset="utf-8">
-            $(document).ready(function(){
-            function(){
-                $.ajax({
-                type: "GET",
-                url: "/data",
-                data: $.cookie("id"),
-                success: function(data){
-                    if(data != ""){
-                        alert(data);
-                    }
-                }
-                });
+            function contentFormatter(value){
+                return value+'...'
             }
-        });
+            
+            function urlFormatter(value){
+                return '<a target="_blank" href="'+value+'">link</a>'
+            }
         </script>
 
     </body>

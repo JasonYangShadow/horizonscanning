@@ -37,16 +37,14 @@ class Mongo:
 
     def insert(self, record, collection):
         if not isinstance(record, list):
-            raise TeleException(Type.WrongTypeException,
-                    'record should be list')
-            self.getCollection(collection)
+            raise TeleException(Type.WrongTypeException,'record should be list')
+        self.getCollection(collection)
         return self.__collection.insert_many(record).inserted_ids
 
     def find(self, collection, condition=None):
         if condition is not None and not isinstance(condition, dict):
-            raise TeleException(Type.WrongTypeException,
-                    'condition should be dict type')
-            self.getCollection(collection)
+            raise TeleException(Type.WrongTypeException,'condition should be dict type')
+        self.getCollection(collection)
         if condition is None:
             return list(self.__collection.find())
         else:
@@ -54,9 +52,8 @@ class Mongo:
 
     def findSkipLimit(self, collection, skip, limit, condition=None):
         if condition is not None and not isinstance(condition, dict):
-            raise TeleException(Type.WrongTypeException,
-                    'condition should be dict type')
-            self.getCollection(collection)
+            raise TeleException(Type.WrongTypeException,'condition should be dict type')
+        self.getCollection(collection)
         if condition is None:
             return list(self.__collection.find().skip(skip).limit(limit))
         else:
@@ -64,9 +61,8 @@ class Mongo:
 
     def count(self,collection,condition=None):
         if condition is not None and not isinstance(condition, dict):
-            raise TeleException(Type.WrongTypeException,
-                    'condition should be dict type')
-            self.getCollection(collection)
+            raise TeleException(Type.WrongTypeException,'condition should be dict type')
+        self.getCollection(collection)
         if condition is None:
             return self.__collection.find().count()
         else:
@@ -74,45 +70,37 @@ class Mongo:
 
     def exist(self, condition, collection):
         if not isinstance(condition, dict):
-            raise TeleException(Type.WrongTypeException,
-                    'condition should be dict type')
-            self.getCollection(collection)
+            raise TeleException(Type.WrongTypeException,'condition should be dict type')
+        self.getCollection(collection)
         return True if self.__collection.count(condition) > 0 else False
 
     def update(self, condition, update, collection):
         if not isinstance(condition, dict):
-            raise TeleException(Type.WrongTypeException,
-                    'condition should be dict')
-            if not isinstance(update, dict):
-                raise TeleException(Type.WrongTypeException,
-                        'update should be dict')
-                self.getCollection(collection)
+            raise TeleException(Type.WrongTypeException,'condition should be dict')
+        if not isinstance(update, dict):
+            raise TeleException(Type.WrongTypeException,'update should be dict')
+        self.getCollection(collection)
         return self.__collection.update_many(condition, update)
 
     def saveUpdate(self, condition, update, collection):
         if not isinstance(condition, dict):
-            raise TeleException(Type.WrongTypeException,
-                    'condition should be dict')
-            if not isinstance(update, dict):
-                raise TeleException(Type.WrongTypeException,
-                        'update should be dict')
-                self.getCollection(collection)
+            raise TeleException(Type.WrongTypeException,'condition should be dict')
+        if not isinstance(update, dict):
+            raise TeleException(Type.WrongTypeException,'update should be dict')
+        self.getCollection(collection)
         return self.__collection.update_many(condition, update, True)
 
     def saveUpdateOne(self, condition, update, collection):
         if not isinstance(condition, dict):
-            raise TeleException(Type.WrongTypeException,
-                    'condition should be dict')
-            if not isinstance(update, dict):
-                raise TeleException(Type.WrongTypeException,
-                        'update should be dict')
-                self.getCollection(collection)
+            raise TeleException(Type.WrongTypeException,'condition should be dict')
+        if not isinstance(update, dict):
+            raise TeleException(Type.WrongTypeException,'update should be dict')
+        self.getCollection(collection)
         return self.__collection.update_one(condition, update, True)
 
     def deleteMany(self, idList, collection):
         if not isinstance(idList, list):
-            raise TeleException(Type.WrongTypeException,
-                    'idList should be list')
-            self.getCollection(collection)
+            raise TeleException(Type.WrongTypeException,'idList should be list')
+        self.getCollection(collection)
         for obj in idList:
             self.__collection.delete_one({'_id': ObjectId(obj)})
