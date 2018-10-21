@@ -67,12 +67,9 @@ class TwitterCrawl(BaseCrawl):
         stream.statuses.filter(track = param['q'], language='en')
 
     def resolve(self, data = None):
-        mdata = []
         if CurlRequest(data['text']) == "neg":
-            data['sentiment'] = 'neg'
-            mdata.append(data)
             mongo = Mongo('config.ini')
-            mongo.insert(mdata,self.__db_twitter)
+            mongo.saveUpdateOne({'content':data['text']},{'$set':{'hashtags':data['hashtags'],'time':data['timestamp']}}, self.__db_twitter)
             #print(data['text'])
 
     def search(self,param):
@@ -91,6 +88,7 @@ class TwitterCrawl(BaseCrawl):
         search = self.__twitter.search(q=param['q'], count=count, geocode=geocode, lang='en', tweet_mode='extended')
         tweets = search['statuses']
         pattern = re.compile(r'RT\s@\w+')
+        mongo = Mongo('config.ini')
         for data in tweets:
             do['hashtags'] = []
             if data['truncated'] == False:
@@ -112,10 +110,6 @@ class TwitterCrawl(BaseCrawl):
             do['user']['location'] = data['user']['location']
             do['place'] = data['place']
             do['sentiment'] = CurlRequest(do['text'])
-            pprint(do)
-
-if __name__ == '__main__':
-    param = {}
-    param['q'] = "Japan Travel OR Japan Tourism -filter:retweets :("
-    twittercrawl = TwitterCrawl('config.ini')
-    twittercrawl.run(param, False)
+            do['time'] = data['created_at']
+            if do['sentiment'] == "neg":
+                mongo.saveUpdateOne({'content':do['text']},{'$set':{'hashtags':do['hashtags'],'time':do['time']}}, self.__db_twitter)
