@@ -40,12 +40,13 @@ class CustomStreamer(TwythonStreamer):
         do['place'] = data['place']
         do['timestamp'] = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
 
-        #do['sentiment'] = CurlRequest(do['text'])
+        do['sentiment'] = CurlRequest(do['text'])
 
-        if self.__queue.full():
-            raise TeleException(Type.FullException,'queue is full')
-        else:
-            self.__queue.put(do)
+        if do['sentiment'] == 'neg':
+            if self.__queue.full():
+                raise TeleException(Type.FullException,'queue is full')
+            else:
+                self.__queue.put(do)
 
     def on_error(self, status_code, data):
         print(status_code)
@@ -67,10 +68,10 @@ class TwitterCrawl(BaseCrawl):
         stream.statuses.filter(track = param['q'], language='en')
 
     def resolve(self, data = None):
-        if CurlRequest(data['text']) == "neg":
-            mongo = Mongo('config.ini')
-            mongo.saveUpdateOne({'content':data['text']},{'$set':{'hashtags':data['hashtags'],'time':data['timestamp']}}, self.__db_twitter)
-            #print(data['text'])
+        mongo = Mongo('config.ini')
+        print(data)
+        mongo.saveUpdateOne({'content':data['text']},{'$set':{'hashtags':data['hashtags'],'time':data['timestamp']}}, self.__db_twitter)
+        #print(data['text'])
 
     def search(self,param):
         if param == None:
