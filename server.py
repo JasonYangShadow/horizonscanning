@@ -54,14 +54,12 @@ def data():
         for d in twitter_data:
             data_item = {}
             data_item['source'] = 'twitter'
-            if len(d['text']) > max_char:
-                data_item['content'] = d['text'][:max_char].strip()
-            else:
-                data_item['content'] = d['text']
-            data_item['hashtags'] = d['hashtags']
-            data_item['time'] = d['timestamp']
+            data_item['content'] = d['content']
+            data_item['title'] = d['hashtags']
+            data_item['time'] = d['time']
             data_list.append(data_item)
     if len(news_data) > 0:
+        print(len(news_data))
         for d in news_data:
             data_item = {}
             data_item['source'] = 'news'

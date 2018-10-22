@@ -9,10 +9,10 @@ from redditcrawl import RedditCrawl
 
 class Test(unittest.TestCase):
 
-    @unittest.skip('skip')
+    #@unittest.skip('skip')
     def testTwitterSearch(self):
         param = {}
-        param['q'] = 'linux'
+        param['q'] = 'Japan'
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.search(param)
 
@@ -29,18 +29,17 @@ class Test(unittest.TestCase):
         twittercrawl = TwitterCrawl('config.ini')
         twittercrawl.run(param,False)
 
-    #@unittest.skip('skip')
+    @unittest.skip('skip')
     def testReddit(self):
         reddit = RedditCrawl('config.ini')
         param = {}
-        param['limit'] = 500
+        param['limit'] = 1000
         param['name'] = 'JapanTravel'
         reddit.run(param)
 
     @unittest.skip('skip')
     def testCurl(self):
         pprint(CurlRequest('though i think Tokyo is a good city to live, the expensive price of stuff turn me down'))
-
 
     @unittest.skip('skip')
     def testNewsorg(self):
@@ -51,7 +50,8 @@ class Test(unittest.TestCase):
         if len(source) > 0:
             source_str = ','.join(list(map(lambda s: s['id'],source)))
             param['sources'] = source_str
-        param['q'] = 'policy OR bitcoin OR health OR city'
+        param['q'] = 'Japan Tourism OR Japan Travel OR Japan'
+        param['from'] = '2018-09-23'
         newcrawl.run(param)
 
     @unittest.skip('skip')

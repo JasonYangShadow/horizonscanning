@@ -64,5 +64,6 @@ if __name__ == '__main__':
     param = {}
     param['limit'] = 1000
     param['name'] = 'JapanTravel'
-    reddit.run(param)
-    time.sleep(24*3600)
+    while True:
+        reddit.run(param)
+        time.sleep(24*3600)

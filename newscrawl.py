@@ -72,5 +72,6 @@ if __name__ == '__main__':
         source_str = ','.join(list(map(lambda s: s['id'],source)))
         param['sources'] = source_str
     param['q'] = '"Japan Tourism" OR "Japan Travel" OR "Tokyo Tourism"'
-    newcrawl.run(param)
-    time.sleep(12*3600)
+    while True:
+        newcrawl.run(param)
+        time.sleep(24*3600)

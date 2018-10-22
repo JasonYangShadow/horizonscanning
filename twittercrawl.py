@@ -52,6 +52,8 @@ class CustomStreamer(TwythonStreamer):
         print(status_code)
         print(data)
 
+textprocess = TextProcess()
+
 class TwitterCrawl(BaseCrawl):
     def __init__(self, config_path = 'config.ini'):
         super().__init__('twittercrawl','crawling twitter website',config_path)
@@ -104,6 +106,8 @@ class TwitterCrawl(BaseCrawl):
                     continue
                 for d in data['extended_tweet']['entities']['hashtags']:
                     do['hashtags'].append(d['text'])
+            do['text'] = textprocess.deleteAt(do['text'])
+            do['text'] = textprocess.deleteHttp(do['text'])
             do['user'] = {}
             do['user']['id'] = data['user']['id']
             do['user']['id_str'] = data['user']['id_str']

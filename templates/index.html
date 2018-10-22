@@ -266,7 +266,11 @@
             }
             
             function urlFormatter(value){
-                return '<a target="_blank" href="'+value+'">LINK</a>'
+                if(value === undefined){
+                    return '-'
+                }else{
+                    return '<a target="_blank" href="'+value+'">LINK</a>'
+                }
             }
         </script>
 

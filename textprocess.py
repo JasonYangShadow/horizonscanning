@@ -82,6 +82,14 @@ class TextProcess:
                 result.append(self.lemmatizeText(token))
         return result
 
+    def deleteAt(self,text):
+        text = re.sub(r'@\w+','',text)
+        return text
+
+    def deleteHttp(self,text):
+        text = re.sub(r'http\S+','',text)
+        return text
+
     def findTopics(self,text):
         tokens = self.preprocess(text)
         if not isinstance(tokens, list):

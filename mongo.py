@@ -55,7 +55,7 @@ class Mongo:
             raise TeleException(Type.WrongTypeException,'condition should be dict type')
         self.getCollection(collection)
         if condition is None:
-            return list(self.__collection.find().skip(skip).limit(limit))
+            return list(self.__collection.find().skip(skip).limit(limit).sort('time',-1))
         else:
             return list(self.__collection.find(condition).skip(skip).limit(limit))
 
